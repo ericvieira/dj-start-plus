@@ -1,25 +1,32 @@
 #!/bin/bash
-if [ -z $1 ]
+if [ -z $1 ] 
 then
     echo "passe o nome do projeto como parametro, tipo: ./dj-script projeto"
 else
-mkdir $1
-cd $1
-python -m venv .$1
-source .$1/bin/activate 
-pip install --upgrade pip
-pip install django
-django-admin startproject $1 .
-pip install python-decouple
-pip install dj-database-url
-pip install dj-static
-pip install django-test-without-migrations
-python manage.py startapp core
-mv core $1 
-pip freeze > requirements.txt
-echo 'gunicorn==19.9.0' >> requirements.txt
-echo 'psycopg2==2.8.3' >> requirements.txt
-echo 'web: gunicorn projeto.wsgi --log-file - :' > Procfile
+
+	#cria a pasta e o ambiente e ativa
+	mkdir $1
+	cd $1
+	python -m venv .$1
+	source .$1/bin/activate 
+	
+	#atualiza o pip e instala as libs
+	pip install --upgrade pip
+	pip install django
+	pip install python-decouple
+	pip install dj-database-url
+	pip install dj-static
+	pip install django-test-without-migrations
+
+	#cria o projeto django e a app core
+	django-admin startproject $1 .
+	python manage.py startapp core
+	mv core $1 
+	
+	#prepara a configuração para o Heroku
+	pip freeze > requirements.txt
+	echo -e "gunicorn==19.9.0\npsycopg2==2.8.3" >> requirements.txt
+	echo "web: gunicorn $1.wsgi --log-file - :" > Procfile
 fi
 
 
