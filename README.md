@@ -103,12 +103,6 @@ No arquivo `wsgi.py` mudar a linha abaixo:
 
 ```
 
-No terminal:
-
-```
-(.projeto) projeto$ pip freeze > requirements.txt
-```
-
 ## Configurar Git
 
 ```
