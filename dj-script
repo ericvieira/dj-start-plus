@@ -1,4 +1,12 @@
 #!/bin/bash
+
+pip-install-and-add-to-requirements () {
+    pkg=$(echo $1 | tr "[:upper:]" "[:lower:]")
+    pip install $pkg
+    versioned=$(pip freeze | tr "[:upper:]" "[:lower:]" | grep $pkg==)
+    echo $versioned >> requirements.txt
+}
+
 if [ -z $1 ] 
 then
     echo "passe o nome do projeto como parametro, tipo: ./dj-script projeto"
@@ -10,13 +18,14 @@ else
 	python -m venv .$1
 	source .$1/bin/activate 
 	
-	#atualiza o pip e instala as libs
+	#atualiza o pip, instala as libs e cria o requirements.txt
+	touch requirements.txt
 	pip install --upgrade pip
-	pip install django
-	pip install python-decouple
-	pip install dj-database-url
-	pip install dj-static
-	pip install django-test-without-migrations
+	pip-install-and-add-to-requirements django
+	pip-install-and-add-to-requirements python-decouple
+	pip-install-and-add-to-requirements dj-database-url
+	pip-install-and-add-to-requirements dj-static
+	pip-install-and-add-to-requirements django-test-without-migrations
 
 	#cria o projeto django e a app core
 	django-admin startproject $1 .
@@ -28,9 +37,6 @@ else
 	echo -e ".$1\n.env\n.idea\n*.sqlite3\n*pyc\n__pycache__\nstaticfiles" > .gitignore
 	
 	#prepara a configuração para o Heroku
-	pip freeze > requirements.txt
 	echo -e "gunicorn==19.9.0\npsycopg2==2.8.3" >> requirements.txt
 	echo "web: gunicorn $1.wsgi --log-file - :" > Procfile
 fi
-
-
