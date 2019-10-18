@@ -103,23 +103,6 @@ No arquivo `wsgi.py` mudar a linha abaixo:
 
 ```
 
-## Configurar Git
-
-```
-(.projeto) projeto$ git init .
-
-```
-Criar arquivo `.gitignore`, e **atenção** para colocar  o seu **.projeto**
-```bash 
-.projeto
-.env
-.idea
-*.sqlite3
-*pyc
-__pycache__
-staticfiles
-````
-
 ## Configurar Heroku
 
 Criando o projeto no Heroku e configurando as variáveis de ambiente:

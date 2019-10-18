@@ -22,13 +22,15 @@ else
 	django-admin startproject $1 .
 	python manage.py startapp core
 	mv core $1 
+
+	#config git
+	git init .
+	echo -e ".$1\n.env\n.idea\n*.sqlite3\n*pyc\n__pycache__\nstaticfiles" > .gitignore
 	
 	#prepara a configuração para o Heroku
 	pip freeze > requirements.txt
 	echo -e "gunicorn==19.9.0\npsycopg2==2.8.3" >> requirements.txt
 	echo "web: gunicorn $1.wsgi --log-file - :" > Procfile
 fi
-
-
 
 
