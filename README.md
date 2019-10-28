@@ -86,13 +86,8 @@ STATIC_URL = '/static/'
 + STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ```
 
-Criar um arquivo `.env` e copiar as variáveis do  `settings.py` sem **espaço** e **aspas**:
+O arquivo `.env` foi gerado pelo script.
 
-```
-SECRET_KEY=<sua SECRET_KEY> 
-DEBUG=True
-ALLOWED_HOSTS=127.0.0.1,.localhost,.herokuapp.com
-```
 
 No arquivo `wsgi.py` mudar a linha abaixo:
 ```git 
