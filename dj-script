@@ -7,9 +7,16 @@ pip-install-and-add-to-requirements () {
     echo $versioned >> requirements.txt
 }
 
-if [ -z $1 ] 
+
+usage="Creates a Django base project 
+
+Usage: $(basename "$0") project-name 
+Where:
+    project-name    The project's name (duh!)"
+
+if [ -z $1 ] || [  ]
 then
-    echo "passe o nome do projeto como parametro, tipo: ./dj-script projeto"
+    echo "$usage"
 else
 
 	#cria a pasta e o ambiente e ativa
