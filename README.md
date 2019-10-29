@@ -98,6 +98,11 @@ No arquivo `wsgi.py` mudar a linha abaixo:
 
 ```
 
+Comando para gerar as pastas para arquivos estáticos
+```
+manage collectstatic --noinput
+```
+
 ## Configurar Heroku
 
 Criando o projeto no Heroku e configurando as variáveis de ambiente:
