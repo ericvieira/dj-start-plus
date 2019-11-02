@@ -45,7 +45,7 @@ else
 	
 	#prepara a configuração para o Heroku
 	echo -e "gunicorn==19.9.0\npsycopg2==2.8.3" >> requirements.txt
-	echo "web: gunicorn $1.wsgi --log-file - :" > Procfile
+	echo "web: gunicorn $1.wsgi --log-file - " > Procfile
 
 	#cria .env file
 	python ../keygen.py > .env
