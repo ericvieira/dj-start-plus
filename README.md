@@ -84,6 +84,16 @@ INSTALLED_APPS = [
 
 STATIC_URL = '/static/'
 + STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
++ #Email configuration
++ EMAIL_BACKEND = config(‘EMAIL_BACKEND’)
++ EMAIL_HOST = config(‘EMAIL_HOST’)
++ EMAIL_PORT = config(‘EMAIL_PORT’, cast=int)
++ EMAIL_USE_TSL = config(‘EMAIL_USE_TSL’, cast=bool)
++ EMAIL_USE_SSL = config(‘EMAIL_USE_SSL’, cast=bool)
++ EMAIL_HOST_USER = config(‘EMAIL_HOST_USER’)
++ EMAIL_HOST_PASSWORD = config(‘EMAIL_HOST_PASSWORD’)
 ```
 
 O arquivo `.env` foi gerado pelo script.
@@ -103,6 +113,7 @@ Comando para gerar as pastas para arquivos estáticos
 manage collectstatic --noinput
 ```
 
+
 ## Configurar Heroku
 
 Criando o projeto no Heroku e configurando as variáveis de ambiente:
@@ -111,6 +122,11 @@ Criando o projeto no Heroku e configurando as variáveis de ambiente:
 (.projeto) projeto$ heroku config:set SECRET_KEY=‘<sua secret key>’
 (.projeto) projeto$ heroku config:set DEBUG=False
 (.projeto) projeto$ heroku config:set ALLOWED_HOSTS=.herokuapp.com
+```
+
+Configuração do SendGrid para envio de email:
+```
+(.projeto) projeto$ heroku addons:create sendgrid:starter
 ```
 
 E para terminar é só adicionar no **git** fazer o **commit** e fazer o **push** pro **Heroku** e está no ar. :smiley:
