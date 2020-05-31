@@ -124,6 +124,14 @@ Criando o projeto no Heroku e configurando as variáveis de ambiente:
 (.projeto) projeto$ heroku config:set ALLOWED_HOSTS=.herokuapp.com
 ```
 
+Enviando a sua primeira versão para o **Heroku**:
+
+``` 
+(.projeto) projeto$ git add .
+(.projeto) projeto$ git commit -m 'inicio'
+(.projeto) projeto$ git push heroku master
+```
+
 Configuração do SendGrid para envio de email:
 ```
 (.projeto) projeto$ heroku addons:create sendgrid:starter
