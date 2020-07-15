@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
++   'django_extensions',
 +   'test_without_migrations',
 +   'projeto.core', 
 ]
@@ -84,6 +85,14 @@ INSTALLED_APPS = [
 
 STATIC_URL = '/static/'
 + STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
++ # Email Configuration
++ EMAIL_BACKEND = config('EMAIL_BACKEND')
++ EMAIL_HOST = config('EMAIL_HOST')
++ EMAIL_PORT = config('EMAIL_PORT', cast=int )
++ EMAIL_USE_TSL = config('EMAIL_USE_TSL', cast=bool)
++ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
++ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 ```
 
 O arquivo `.env` foi gerado pelo script.
@@ -112,5 +121,15 @@ Criando o projeto no Heroku e configurando as variáveis de ambiente:
 (.projeto) projeto$ heroku config:set DEBUG=False
 (.projeto) projeto$ heroku config:set ALLOWED_HOSTS=.herokuapp.com
 ```
+
+## Configurar SendGrid
+
+``` 
+(.projeto) projeto$ heroku addons:create sendgrid:starter
+(.projeto) projeto$ heroku config:set EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend EMAIL_HOST=smtp.sendgrid.net EMAIL_PORT=587 EMAIL_USE_TSL=True
+(.projeto) projeto$ heroku config 
+(.projeto) projeto$ heroku config:set EMAIL_HOST_USER=<user criado no sendgrid do heroku> EMAIL_HOST_PASSWORD=<senha criada no sendgrid do heroku>
+```
+
 
 E para terminar é só adicionar no **git** fazer o **commit** e fazer o **push** pro **Heroku** e está no ar. :smiley:

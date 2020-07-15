@@ -4,7 +4,7 @@ pip-install-and-add-to-requirements () {
     pkg=$(echo $1 | tr "[:upper:]" "[:lower:]")
     pip install $pkg
     versioned=$(pip freeze | tr "[:upper:]" "[:lower:]" | grep $pkg==)
-    echo $versioned >> requirements.txt
+    echo $versioned >> requirements-dev.txt
 }
 
 
@@ -26,13 +26,17 @@ else
 	source .$1/bin/activate 
 	
 	#atualiza o pip, instala as libs e cria o requirements.txt
-	touch requirements.txt
+	touch requirements-dev.txt
 	pip install --upgrade pip
 	pip-install-and-add-to-requirements django
 	pip-install-and-add-to-requirements python-decouple
 	pip-install-and-add-to-requirements dj-database-url
 	pip-install-and-add-to-requirements dj-static
+	pip-install-and-add-to-requirements django-extensions
 	pip-install-and-add-to-requirements django-test-without-migrations
+
+	cp requirements-dev.txt requirements.txt
+	pip-install-and-add-to-requirements jupyter
 
 	#cria o projeto django e a app core
 	django-admin startproject $1 .
@@ -50,4 +54,7 @@ else
 	#cria .env file
 	python ../keygen.py > .env
 	echo -e "DEBUG=True\nALLOWED_HOSTS=127.0.0.1,.localhost,.herokuapp.com" >> .env
+
+	#config email console
+	echo "EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend\nEMAIL_HOST=localhost\nEMAIL_PORT=25\nEMAIL_USE_TSL=False\nEMAIL_HOST_USER=\nEMAIL_HOST_PASSWORD=" >> .env
 fi
