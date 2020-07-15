@@ -86,6 +86,7 @@ INSTALLED_APPS = [
 STATIC_URL = '/static/'
 + STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
 + # Email Configuration
 + EMAIL_BACKEND = config('EMAIL_BACKEND')
 + EMAIL_HOST = config('EMAIL_HOST')
@@ -93,6 +94,7 @@ STATIC_URL = '/static/'
 + EMAIL_USE_TSL = config('EMAIL_USE_TSL', cast=bool)
 + EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 + EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
 ```
 
 O arquivo `.env` foi gerado pelo script.
@@ -112,6 +114,7 @@ Comando para gerar as pastas para arquivos estáticos
 manage collectstatic --noinput
 ```
 
+
 ## Configurar Heroku
 
 Criando o projeto no Heroku e configurando as variáveis de ambiente:
@@ -122,6 +125,7 @@ Criando o projeto no Heroku e configurando as variáveis de ambiente:
 (.projeto) projeto$ heroku config:set ALLOWED_HOSTS=.herokuapp.com
 ```
 
+
 ## Configurar SendGrid
 
 ``` 
@@ -129,6 +133,15 @@ Criando o projeto no Heroku e configurando as variáveis de ambiente:
 (.projeto) projeto$ heroku config:set EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend EMAIL_HOST=smtp.sendgrid.net EMAIL_PORT=587 EMAIL_USE_TSL=True
 (.projeto) projeto$ heroku config 
 (.projeto) projeto$ heroku config:set EMAIL_HOST_USER=<user criado no sendgrid do heroku> EMAIL_HOST_PASSWORD=<senha criada no sendgrid do heroku>
+```
+
+
+Enviando a sua primeira versão para o **Heroku**:
+
+``` 
+(.projeto) projeto$ git add .
+(.projeto) projeto$ git commit -m 'inicio'
+(.projeto) projeto$ git push heroku master
 ```
 
 
