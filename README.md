@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
 +   'django_extensions',
-+   'test_without_migrations',
 +   'projeto.core', 
 ]
 
@@ -76,7 +75,7 @@ INSTALLED_APPS = [
 -        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 -    }
 - }
-+ default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
++ default_dburl = 'sqlite:///' + str(BASE_DIR / 'db.sqlite3')
 
 + DATABASES = {
 +     'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
@@ -84,7 +83,7 @@ INSTALLED_APPS = [
 
 
 STATIC_URL = '/static/'
-+ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
++ STATIC_ROOT = 'staticfiles'
 
 
 + # Email Configuration
