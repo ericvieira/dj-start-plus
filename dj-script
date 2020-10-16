@@ -37,6 +37,13 @@ else
 	cp requirements-dev.txt requirements.txt
 	pip-install-and-add-to-requirements jupyter
 
+	#cria README.md
+	echo -e "# $1" > README.md
+	echo -e "##Criando novo ambiente" >> README.md
+	echo -e "Crie um virtualenv, ative e instale as dependências:" >> README.md
+	echo -e "\`\`\` console\npython -m venv .$1\nsource .$1/bin/activate \npip install -r requirements-dev.txt \n\`\`\`" >> README.md
+
+
 	#cria o projeto django e a app core
 	django-admin startproject $1 .
 	python manage.py startapp core
