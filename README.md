@@ -16,7 +16,7 @@ Editar na `urls.py`:
 + from projeto.core import views
 
 urlpatterns = [
-+   path('', views.home),
++   path('', views.home, name='home'),
     path('admin/', admin.site.urls),
 ]
 ```
@@ -81,8 +81,15 @@ INSTALLED_APPS = [
 + }
 
 
+- LANGUAGE_CODE = 'en-us'
++ LANGUAGE_CODE = 'pt-br'
+
+- TIME_ZONE = 'UTC'
++ TIME_ZONE = 'America/Sao_Paulo'
+
 STATIC_URL = '/static/'
 + STATIC_ROOT = 'staticfiles'
+
 
 
 + # Email Configuration
