@@ -87,9 +87,14 @@ INSTALLED_APPS = [
 - TIME_ZONE = 'UTC'
 + TIME_ZONE = 'America/Sao_Paulo'
 
+
++ MIDDLEWARE_CLASSES = (
++     'whitenoise.middleware.WhiteNoiseMiddleware',
++ )
+
+
 STATIC_URL = '/static/'
 + STATIC_ROOT = 'staticfiles'
-
 
 
 + # Email Configuration
@@ -105,27 +110,13 @@ STATIC_URL = '/static/'
 O arquivo `.env` foi gerado pelo script.
 
 
-No arquivo `wsgi.py` mudar a linha abaixo:
-```git 
-+ from dj_static import Cling
-
-- application = get_wsgi_application()
-+ application = Cling(get_wsgi_application())
-
-```
-
-Comando para gerar as pastas para arquivos estáticos
-```
-manage collectstatic --noinput
-```
-
 
 ## Configurar Heroku
 
 Criando o projeto no Heroku e configurando as variáveis de ambiente:
 ``` 
 (.projeto) projeto$ heroku apps:create seu-projeto
-(.projeto) projeto$ heroku config:set SECRET_KEY=‘<sua secret key>’
+(.projeto) projeto$ heroku config:set SECRET_KEY=`python contrib/keygen.py`
 (.projeto) projeto$ heroku config:set DEBUG=False
 (.projeto) projeto$ heroku config:set ALLOWED_HOSTS=.herokuapp.com
 ```
@@ -135,7 +126,7 @@ Criando o projeto no Heroku e configurando as variáveis de ambiente:
 
 ``` 
 (.projeto) projeto$ heroku addons:create sendgrid:starter
-(.projeto) projeto$ heroku config:set EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend EMAIL_HOST=smtp.sendgrid.net EMAIL_PORT=587 EMAIL_USE_TSL=True
+(.projeto) projeto$ heroku config:set EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend EMAIL_HOST=smtp.sendgrid.net EMAIL_PORT=587 EMAIL_USE_TLS=True
 (.projeto) projeto$ heroku config 
 (.projeto) projeto$ heroku config:set EMAIL_HOST_USER=<user criado no sendgrid do heroku> EMAIL_HOST_PASSWORD=<senha criada no sendgrid do heroku>
 ```

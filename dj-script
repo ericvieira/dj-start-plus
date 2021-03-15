@@ -31,37 +31,41 @@ else
 	pip-install-and-add-to-requirements django
 	pip-install-and-add-to-requirements python-decouple
 	pip-install-and-add-to-requirements dj-database-url
-	pip-install-and-add-to-requirements dj-static
+	pip-install-and-add-to-requirements whitenoise
 	pip-install-and-add-to-requirements django-extensions
 
 	cp requirements-dev.txt requirements.txt
 	pip-install-and-add-to-requirements jupyter
 
-	#cria README.md
-	echo -e "# $1" > README.md
-	echo -e "##Criando novo ambiente" >> README.md
-	echo -e "Crie um virtualenv, ative e instale as dependências:" >> README.md
-	echo -e "\`\`\` console\npython -m venv .$1\nsource .$1/bin/activate \npip install -r requirements-dev.txt \n\`\`\`" >> README.md
-
+	#cria .env file
+	cp ../env-sample .env
 
 	#cria o projeto django e a app core
 	django-admin startproject $1 .
 	python manage.py startapp core
 	mv core $1 
 
-	#config git
-	git init .
-	echo -e ".$1\n.env\n.idea\n*.sqlite3\n*pyc\n__pycache__\nstaticfiles" > .gitignore
+	#cria README.md
+	echo -e "# $1" > README.md
+	echo -e "##Criando novo ambiente" >> README.md
+	echo -e "Crie um virtualenv, ative e instale as dependências:" >> README.md
+	echo -e "\`\`\`console\npython -m venv .$1\nsource .$1/bin/activate \npip install -r requirements-dev.txt \ncp contrib/env-sample .env\n\`\`\`" >> README.md
+	echo -e "##Criando deploy Heroku" >> README.md
+	echo -e "Crie uma instancia no heroku:" >> README.md
+	echo -e "\`\`\`console\nheroku apps:create seu-projeto\nheroku config:set SECRET_KEY=\`python contrib\keygen.py\`\nheroku config:set DEBUG=False\nheroku config:set ALLOWED_HOSTS=.herokuapp.com\n\`\`\`" >> README.md
+
+	#arquivos para iniciar projeto do git
+	mkdir contrib
+	cp ../keygen.py contrib/
+	cp ../env-sample contrib/
 	
 	#prepara a configuração para o Heroku
 	echo -e "gunicorn==20.0.4\npsycopg2==2.8.6" >> requirements.txt
 	echo "web: gunicorn $1.wsgi --log-file - " > Procfile
 
-	#cria .env file
-	python ../keygen.py > .env
-	echo -e "DEBUG=True\nALLOWED_HOSTS=127.0.0.1,.localhost,.herokuapp.com" >> .env
+	#config git
+	git init .
+	echo -e ".$1\n.env\n.idea\n*.sqlite3\n*pyc\n__pycache__\nstaticfiles" > .gitignore
 
-	#configuracao de email
-	echo -e "\nEMAIL_BACKEND=django.core.mail.backends.console.EmailBackend\nEMAIL_HOST=localhost\nEMAIL_PORT=25\nEMAIL_USE_TLS=False\nEMAIL_HOST_USER=\nEMAIL_HOST_PASSWORD=" >> .env
 	
 fi
