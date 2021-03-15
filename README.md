@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'test_without_migrations',
 +   'django_extensions',
 +   'projeto.core', 
 ]

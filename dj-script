@@ -33,6 +33,7 @@ else
 	pip-install-and-add-to-requirements dj-database-url
 	pip-install-and-add-to-requirements whitenoise
 	pip-install-and-add-to-requirements django-extensions
+	pip-install-and-add-to-requirements django-test-without-migrations
 
 	cp requirements-dev.txt requirements.txt
 	pip-install-and-add-to-requirements jupyter
